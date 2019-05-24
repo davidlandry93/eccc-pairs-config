@@ -10,7 +10,8 @@ CONFIG_DEFAULTS = {
 }
 
 ID_OF_FIELD = {
-    'TT': '49717'
+    ('hrdps', '2t'): '49717',
+    ('hrdps', 'ws'): '49859'
 }
 
 
@@ -106,14 +107,14 @@ def generate_layers(query):
         for dimension in dimensions_of_query:
             layers.append({
                 'type': 'raster',
-                'id': ID_OF_FIELD[field],
+                'id': ID_OF_FIELD[(query['system'], field)],
                 'dimensions': [dimension]
             })
     return layers
 
 
 def generate_dimensions(query):
-    return [{'name': 'horizon', 'value': str(x)} for x in query['lead_time']]
+    return [{'name': 'horizon', 'value': str(int(x))} for x in query['lead_time']]
 
 
 def generate_spatial(query):
@@ -127,8 +128,9 @@ def generate_temporal(query):
     begin_reference_time = parse_input_date(query['begin'])
     end_reference_time = parse_input_date(query['end'])
 
-    begin = reference_time_to_valid_time(begin_reference_time, query['lead_time'])
-    end =  reference_time_to_valid_time(end_reference_time, query['lead_time'])
+    lead_time_ints = [int(x) for x in query['lead_time']]
+    begin = reference_time_to_valid_time(begin_reference_time, min(lead_time_ints))
+    end =  reference_time_to_valid_time(end_reference_time, max(lead_time_ints))
 
     return {
         'intervals': [
