@@ -9,8 +9,7 @@
         "lead_time": [3, 4, 5, 6]
     },
     "config": {
-        "download_dir": "/local/drive2/cmdd/cmds/afsmdav/ecccpairs",
-        "username": "admin_eccc@ibm.com",
-        "password": "uWLg5JGPVv286RVH"
+        "username": "",
+        "password": ""
     }
 }
