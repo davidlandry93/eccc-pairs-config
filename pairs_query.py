@@ -167,3 +167,6 @@ def process_pairs_query(pairs_query):
     pairs_query.download()
 
 
+
+if __name__ == '__main__':
+    cli()
